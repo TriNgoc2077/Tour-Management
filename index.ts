@@ -1,5 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from 'dotenv';
+import sequelize from "./config/database";
+sequelize;
 dotenv.config();
 const app: Express = express();
 const port: string | number = process.env.PORT || 3001;
@@ -12,5 +14,5 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-    console.log('App listening on port ', port);
+    console.log('App listening on port', port);
 });
