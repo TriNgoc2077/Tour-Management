@@ -36,6 +36,19 @@ if (!cart) {
   localStorage.setItem('cart', JSON.stringify([]));
 }
 
+
+//show quantity in minicart
+const showMiniCart = () => {
+  const miniCart = document.querySelector('[mini-cart]');
+  if (miniCart) {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      miniCart.innerHTML = cart.length;
+    }
+  }
+
+}
+showMiniCart();
 //add to cart
 const formAddToCart = document.querySelector('[form-add-to-cart]');
 if (formAddToCart) {
@@ -57,6 +70,7 @@ if (formAddToCart) {
 
       localStorage.setItem('cart', JSON.stringify(cart));
       alertAddCartSuccess();
+      showMiniCart();
     }
   });
 }
