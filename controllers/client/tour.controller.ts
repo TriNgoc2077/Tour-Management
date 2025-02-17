@@ -9,7 +9,7 @@ export const index = async (req: Request, res: Response) => {
         },
         raw: true
     });
-    console.log(tours);
+
     res.render('client/pages/tours/index', {
         pageTitle: 'List tours',
         tours: tours
