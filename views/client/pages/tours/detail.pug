@@ -8,7 +8,7 @@ block main
         .col-6
           if (tourDetail.images)
             .inner-images
-              .swiper.swiper-images-main
+              .swiper.imagesMain
                 .swiper-wrapper
                   each image in tourDetail.images
                     .swiper-slide
@@ -16,7 +16,13 @@ block main
                         img(src=image)
                 .swiper-button-prev
                 .swiper-button-next
-        
+              .swiper.imagesThumb 
+                .swiper-wrapper
+                  each image in tourDetail.images
+                    .swiper-slide
+                      .inner-image
+                        img(src=image)
+
         .col-6
           .inner-title #{tourDetail.title}
 
