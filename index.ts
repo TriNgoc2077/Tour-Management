@@ -2,14 +2,14 @@ import express, { Express } from "express";
 import dotenv from 'dotenv';
 import clientRouters from "./routers/client/index.router";
 import moment from 'moment';
-
+import cors from 'cors';
 dotenv.config();
 const app: Express = express();
 const port: string | number = process.env.PORT || 3001;
 
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
-
+app.use(cors({credentials: true}));
 //App local variables
 app.locals.moment = moment;
 
