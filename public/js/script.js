@@ -12,3 +12,5 @@ if (showAlert) {
     });
 }
 // end show alert
+
+console.log('ok');
