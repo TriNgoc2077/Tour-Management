@@ -193,7 +193,10 @@ if(formOrder) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        if(data.code == "success") {
+          localStorage.setItem("cart", JSON.stringify([]));
+          window.location.href = `/order/success?orderCode=${data.orderCode}`;
+        }
       })
   })
 }

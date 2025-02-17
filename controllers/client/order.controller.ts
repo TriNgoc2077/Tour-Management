@@ -18,11 +18,38 @@ interface ITour {
     stock?: number;
     status?: string;
     position?: number;
-    slug: number;
+    slug: string;
     deleted?: boolean;
     deletedAt?: Date;
     createdAt?: Date;
     updatedAt?: Date;
+}
+interface IOrder {
+    id: number;
+    code: string;
+    fullName: string;
+    phone: string;
+    note?: string;
+    status?: string;
+    total_price?: number;
+    deleted?: boolean;
+    deletedAt?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+interface IOrderItem {
+    id: number;
+    orderId: number;
+    tourId: number;
+    title?: string;
+    slug?: string;
+    image?: string;
+    quantity?: number;
+    price_special?: number;
+    price?: number;
+    total: number;
+    discount?: number;
+    timeStart: Date;
 }
 export const index = async (req: Request, res: Response) => {
     const info = req.body.info;
@@ -74,3 +101,47 @@ export const index = async (req: Request, res: Response) => {
         orderCode: code
     });
 };
+
+export const success = async (req: Request, res: Response) => {
+    const orderCode = req.query.orderCode;
+  
+    const order = await Order.findOne({
+      where: {
+        code: orderCode,
+        deleted: false,
+      },
+      raw: true,
+    }) as unknown as IOrder;
+  
+    const ordersItem = await OrderItem.findAll({
+      where: {
+        orderId: order.id,
+      },
+      raw: true,
+    }) as unknown as IOrderItem[];
+  
+    for (const item of ordersItem) {
+      item.price_special = (item.price || 0 * (1 - (item.discount || 0)/ 100));
+      item.total = item.price_special * (item.quantity || 0);
+  
+      const tourInfo = await Tour.findOne({
+        where: {
+          id: item["tourId"],
+        },
+        raw: true,
+      }) as unknown as ITour;
+  
+      const images = JSON.parse(tourInfo.images || '');
+      item.image = images[0];
+      item.title = tourInfo.title;
+      item.slug = tourInfo.slug;
+    }
+  
+    order.total_price = ordersItem.reduce((sum, item) => sum + item["total"], 0);
+  
+    res.render("client/pages/order/success", {
+      pageTitle: "Đặt hàng thành công",
+      order: order,
+      ordersItem: ordersItem
+    });
+  };
