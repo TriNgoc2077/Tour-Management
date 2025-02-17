@@ -2,6 +2,10 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/moment.pug
 block main
+  div(
+    class="alert alert-success alert-hidden"
+    add-to-cart-success
+  ) Added to your cart ! <span close-alert>x</span>
   .tour-detail
     .container.my-3
       .row

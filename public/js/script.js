@@ -1,18 +1,16 @@
-// show alert
-const showAlert = document.querySelector("[show-alert]");
-if (showAlert) {
-    const time = parseInt(showAlert.getAttribute("data-time"));
-    const closeAlert = showAlert.querySelector("[close-alert]")
-    
+const alertAddCartSuccess = () => {
+  const alert = document.querySelector('[add-to-cart-success]');
+  if (alert) {
+    alert.classList.remove('alert-hidden');
     setTimeout(() => {
-        showAlert.classList.add("alert-hidden");
-    }, time);
+      alert.classList.add("alert-hidden");
+    }, 3000);
+    const closeAlert = alert.querySelector('[close-alert]');
     closeAlert.addEventListener("click", () => {
-        showAlert.classList.add("alert-hidden");
+      alert.classList.add("alert-hidden");
     });
+  }
 }
-// end show alert
-
 //slider images
 var imagesThumb = new Swiper(".imagesThumb", {
   spaceBetween: 10,
@@ -38,7 +36,6 @@ if (!cart) {
   localStorage.setItem('cart', JSON.stringify([]));
 }
 
-
 //add to cart
 const formAddToCart = document.querySelector('[form-add-to-cart]');
 if (formAddToCart) {
@@ -59,6 +56,7 @@ if (formAddToCart) {
       }
 
       localStorage.setItem('cart', JSON.stringify(cart));
+      alertAddCartSuccess();
     }
   });
 }
