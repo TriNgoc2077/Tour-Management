@@ -17,7 +17,7 @@ interface ITour {
     stock?: number;
     status?: string;
     position?: number;
-    slug: number;
+    slug: string;
     deleted?: boolean;
     deletedAt?: Date;
     createdAt?: Date;
