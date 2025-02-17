@@ -10,7 +10,7 @@ interface ITour {
     image: string;
     price?: number;
     discount?: number;
-    price_special: number | string;
+    price_special?: number | string;
     information?: string;
     schedule?: string;
     timeStart?: Date;
@@ -53,4 +53,24 @@ export const index = async (req: Request, res: Response) => {
         pageTitle: 'List tours',
         tours: tours
     });
+}
+
+//[GET] /detail/slugTour
+export const detail = async (req: Request, res: Response) => {
+    const slugTour = req.params.slugTour;
+    const tourDetail = await Tour.findOne({
+        where: {
+            slug: slugTour,
+            deleted: false,
+            status: 'active'
+        },
+        raw: true
+    }) as unknown as ITour;
+    if (tourDetail.images) tourDetail.images = JSON.parse(tourDetail.images);
+    tourDetail.price_special = (tourDetail.price || 0) * (1 - (tourDetail.discount || 0)/100);
+    console.log(tourDetail);
+    res.render('client/pages/tours/detail', {
+        pageTitle: 'Tour detail',
+        tourDetail
+    })
 }

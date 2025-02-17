@@ -1,0 +1,66 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/moment.pug
+block main
+  .tour-detail
+    .container.my-3
+      .row
+        .col-6
+          if (tourDetail.images)
+            .inner-images
+              .swiper.swiper-images-main
+                .swiper-wrapper
+                  each image in tourDetail.images
+                    .swiper-slide
+                      .inner-image
+                        img(src=image)
+                .swiper-button-prev
+                .swiper-button-next
+        
+        .col-6
+          .inner-title #{tourDetail.title}
+
+          .inner-barcode
+            <i class="fa-solid fa-barcode"></i> Tour ID: #{tourDetail.code}
+
+          .inner-time-start
+            <i class="fa-solid fa-calendar-days"></i> Time Start:  
+            +formatDateTime(tourDetail.timeStart)
+
+          .inner-stock
+            <i class="fa-solid fa-person-walking-luggage"></i> Left: #{tourDetail.stock} slot
+
+          .inner-price-special #{tourDetail.price_special.toLocaleString()}đ
+          .inner-price #{tourDetail.price.toLocaleString()}đ
+          .inner-percent Decrease to #{tourDetail.discount}%
+
+          form(
+            form-add-to-cart
+            tour-id=tourDetail.id
+          )
+            input(
+              class="form-control mb-2"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max=tourDetail.stock
+            )
+            button(
+              type="submit"
+              class="btn btn-success btn-block"
+            ) Add to cart
+
+          
+      .row
+        .col-12
+          .inner-infomation
+            .inner-label Tour Infomation
+            .inner-text
+              | !{tourDetail.information}
+        
+        .col-12
+          .inner-infomation
+            .inner-label Tour Schedule
+            .inner-text
+              | !{tourDetail.schedule}
