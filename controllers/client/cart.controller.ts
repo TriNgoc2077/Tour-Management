@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import Tour from "../../model/tour.model";
+import Tour from "../../models/tour.model";
 interface ITour {
     id: number;
     title: string;

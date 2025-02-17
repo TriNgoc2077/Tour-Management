@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Order from "../../model/order.model";
+import Order from "../../models/order.model";
 import { generateOrderCode } from "../../helpers/generate.helper";
-import Tour from "../../model/tour.model";
-import OrderItem from "../../model/order-item.model";
+import Tour from "../../models/tour.model";
+import OrderItem from "../../models/order-item.model";
 interface ITour {
     id: number;
     title: string;
